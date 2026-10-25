@@ -1,62 +1,578 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0d0f15"><meta name="description" content="Local Pokémon card inventory and sales tracker"><title>PokéSeller</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d0f15">
+<meta name="description" content="Local Pokémon card inventory and sales tracker">
+<title>PokéSeller</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-:root{color-scheme:dark;--bg:#0d0f15;--panel:#171a24;--line:#303548;--text:#f5f6fb;--muted:#a0a6b8;--yellow:#ffd84d;--green:#7de0a3;--red:#ff858b}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:radial-gradient(ellipse at 70% -10%,#30253c,transparent 35%),var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;line-height:1.5}button,input{font:inherit}button,a{cursor:pointer}a{color:inherit;text-decoration:none}.header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:13px clamp(14px,4vw,60px);background:#0d0f15ed;border-bottom:1px solid #ffffff14;backdrop-filter:blur(14px)}.brand{display:flex;align-items:center;gap:10px}.mark{display:grid;place-items:center;background:var(--yellow);color:#19150a;width:42px;height:42px;border-radius:13px;font:700 24px "Space Grotesk"}.brand strong,.brand small{display:block}.brand small{font-size:11px;color:var(--muted)}nav{display:flex;gap:4px;flex-wrap:wrap}nav a{padding:8px 10px;color:var(--muted);font-size:12px;border-radius:9px}nav a:hover{background:#222635;color:white}.shell{width:min(1150px,calc(100% - 28px));margin:auto}.hero{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:30px 0 50px;padding:clamp(24px,5vw,55px);border:1px solid #ffffff13;border-radius:25px;background:linear-gradient(115deg,#202434,#1a1a29 65%,#33263b)}.eyebrow{margin:0 0 7px;color:var(--yellow);font-size:10px;letter-spacing:.17em;font-weight:700}.hero h1{font:700 clamp(37px,6vw,64px)/1.05 "Space Grotesk";letter-spacing:-.05em;margin:0}.hero h1 span{color:var(--yellow)}.hero p:last-child{max-width:480px;color:#c5c8d4}.ball{width:125px;height:125px;flex-shrink:0;border:11px solid #ffffff19;border-radius:50%;background:linear-gradient(#f76565 0 46%,#242837 46% 54%,#e7e9f0 54%);position:relative;transform:rotate(-15deg)}.ball:before{content:"";position:absolute;top:calc(50% - 6px);height:12px;width:100%;background:#242837}.ball:after{content:"";position:absolute;top:calc(50% - 20px);left:calc(50% - 20px);width:40px;height:40px;border:8px solid #242837;border-radius:50%;background:#f5f6fb}.section{margin:0 0 52px}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:17px}.heading h2{font:600 clamp(24px,3vw,31px) "Space Grotesk";margin:0}.heading .eyebrow{margin-bottom:4px}.muted,.subtle{color:var(--muted)}.subtle{font-size:12px}.intro{color:var(--muted);font-size:13px;margin:-5px 0 18px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat,.panel,.tile,.sale{border:1px solid var(--line);border-radius:16px;background:var(--panel)}.stat{padding:17px}.stat span{display:block;color:var(--muted);font-size:11px}.stat strong{display:block;font:600 clamp(22px,2.6vw,30px) "Space Grotesk";margin:8px 0;overflow-wrap:anywhere}.stat small{font-size:10px;color:#848ba0}.green{color:var(--green)!important}.note{margin-top:13px;padding:12px 14px;border-left:3px solid var(--yellow);background:#ffd84d0a;border-radius:0 9px 9px 0;color:var(--muted);font-size:12px}.row{display:flex;gap:9px}.row input{flex:1;min-width:0}.form,.panel{padding:21px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.formgrid label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600}.formgrid input,.row input,.filter{width:100%;padding:11px 12px;border:1px solid #383e52;border-radius:9px;background:#10121a;color:white;font-size:13px}.formgrid input::placeholder,.row input::placeholder{color:#6e7589}.full{grid-column:1/-1}.help{color:var(--muted);font-size:11px;margin:12px 0}.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:9px;padding:10px 13px;font-size:12px;font-weight:700}.primary{background:var(--yellow);color:#181407}.secondary{background:#232737;border-color:#3b4155;color:white}.danger{background:transparent;border-color:#703941;color:#ff999e}.btn:disabled{opacity:.4;cursor:not-allowed}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:16px}.tile{overflow:hidden}.art{height:175px;display:grid;place-items:center;padding:12px;background:radial-gradient(ellipse,#2a2f40,#171923)}.art img{width:100%;height:100%;object-fit:contain}.placeholder{color:#7f879d;font-size:12px}.tilebody{padding:13px}.tile h3{font-size:14px;margin:0 0 4px}.meta{font-size:11px;color:var(--muted);margin:0}.price{font:600 22px "Space Grotesk";margin:10px 0 2px}.costline,.profitline{font-size:11px;color:var(--muted);margin:4px 0}.profitline{color:var(--green)}.unknown{color:#f4cb69!important}.actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}.actions .btn{flex:1;padding:8px 7px;font-size:10px}.filter{max-width:350px}.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.empty{padding:30px 15px;text-align:center;border:1px dashed #363c50;border-radius:15px;color:var(--muted);font-size:13px}.cartrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.cartrow:last-child{border:0}.cartrow strong{display:block;font-size:13px}.cartrow small{color:var(--muted);font-size:11px}.cartactions{display:flex;align-items:center;gap:8px}.cartactions input{width:60px;padding:7px;background:#10121a;color:white;border:1px solid var(--line);border-radius:7px}.cartfoot{display:flex;align-items:center;justify-content:space-between;gap:15px;border-top:1px solid var(--line);padding-top:16px;margin-top:15px}.cartfoot strong{display:block;font:600 24px "Space Grotesk"}.sales{display:grid;gap:12px}.sale{padding:17px}.saletop{display:flex;justify-content:space-between;gap:10px}.saletop h3{font-size:13px;margin:0}.date{font-size:11px;color:var(--muted)}.saleitems{font-size:12px;margin:12px 0}.metrics{display:flex;flex-wrap:wrap;gap:16px 25px;border-top:1px solid var(--line);padding-top:12px}.metrics span,.metrics strong{display:block}.metrics span{font-size:10px;color:var(--muted)}.metrics strong{font-size:13px}.details{font-size:11px;color:var(--muted);margin-top:10px}.backup{display:flex;justify-content:space-between;align-items:center;gap:20px}.backup h3{margin:0 0 5px;font-size:14px}.backup p{font-size:12px;color:var(--muted);margin:0;max-width:650px}.backupactions{display:flex;gap:8px;flex-wrap:wrap}.footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:24px 0 32px;border-top:1px solid var(--line);font-size:10px;color:#7f869a}.notice{position:sticky;top:80px;z-index:4;padding:12px 15px;margin:-25px 0 25px;border-radius:10px;background:#183326;border:1px solid #3c684f;color:#c3f4d4;font-size:12px}.notice.error{background:#381d24;border-color:#7b3c44;color:#ffd0d3}.notice[hidden]{display:none}dialog{width:min(600px,calc(100% - 24px));max-height:90vh;overflow:auto;background:var(--panel);color:white;border:1px solid var(--line);border-radius:17px;padding:22px}dialog::backdrop{background:#05060bd9}.dialogfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:root{color-scheme:dark;--bg:#0d0f15;--panel:#171a24;--line:#303548;--text:#f5f6fb;--muted:#a0a6b8;--yellow:#ffd84d;--green:#7de0a3;--red:#ff858b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{margin:0;background:radial-gradient(ellipse at 70% -10%,#30253c,transparent 35%),var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;line-height:1.5}
+button,input{font:inherit}
+button,a{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:13px clamp(14px,4vw,60px);background:#0d0f15ed;border-bottom:1px solid #ffffff14;backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:grid;place-items:center;background:var(--yellow);color:#19150a;width:42px;height:42px;border-radius:13px;font:700 24px "Space Grotesk"}
+.brand strong,.brand small{display:block}
+.brand small{font-size:11px;color:var(--muted)}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{padding:8px 10px;color:var(--muted);font-size:12px;border-radius:9px}
+nav a:hover{background:#222635;color:white}
+.shell{width:min(1150px,calc(100% - 28px));margin:auto}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:30px 0 50px;padding:clamp(24px,5vw,55px);border:1px solid #ffffff13;border-radius:25px;background:linear-gradient(115deg,#202434,#1a1a29 65%,#33263b)}
+.eyebrow{margin:0 0 7px;color:var(--yellow);font-size:10px;letter-spacing:.17em;font-weight:700}
+.hero h1{font:700 clamp(37px,6vw,64px)/1.05 "Space Grotesk";letter-spacing:-.05em;margin:0}
+.hero h1 span{color:var(--yellow)}
+.hero p:last-child{max-width:480px;color:#c5c8d4}
+.ball{width:125px;height:125px;flex-shrink:0;border:11px solid #ffffff19;border-radius:50%;background:linear-gradient(#f76565 0 46%,#242837 46% 54%,#e7e9f0 54%);position:relative;transform:rotate(-15deg)}
+.ball:before{content:"";position:absolute;top:calc(50% - 6px);height:12px;width:100%;background:#242837}
+.ball:after{content:"";position:absolute;top:calc(50% - 20px);left:calc(50% - 20px);width:40px;height:40px;border:8px solid #242837;border-radius:50%;background:#f5f6fb}
+.section{margin:0 0 52px}
+.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:17px}
+.heading h2{font:600 clamp(24px,3vw,31px) "Space Grotesk";margin:0}
+.heading .eyebrow{margin-bottom:4px}
+.muted,.subtle{color:var(--muted)}
+.subtle{font-size:12px}
+.intro{color:var(--muted);font-size:13px;margin:-5px 0 18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat,.panel,.tile,.sale{border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.stat{padding:17px}
+.stat span{display:block;color:var(--muted);font-size:11px}
+.stat strong{display:block;font:600 clamp(22px,2.6vw,30px) "Space Grotesk";margin:8px 0;overflow-wrap:anywhere}
+.stat small{font-size:10px;color:#848ba0}
+.green{color:var(--green)!important}
+.note{margin-top:13px;padding:12px 14px;border-left:3px solid var(--yellow);background:#ffd84d0a;border-radius:0 9px 9px 0;color:var(--muted);font-size:12px}
+.row{display:flex;gap:9px}
+.row input{flex:1;min-width:0}
+.panel{padding:21px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.formgrid label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600}
+.formgrid input,.row input,.filter{width:100%;padding:11px 12px;border:1px solid #383e52;border-radius:9px;background:#10121a;color:white;font-size:13px}
+.formgrid input::placeholder,.row input::placeholder{color:#6e7589}
+.full{grid-column:1/-1}
+.help{color:var(--muted);font-size:11px;margin:12px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:9px;padding:10px 13px;font-size:12px;font-weight:700}
+.primary{background:var(--yellow);color:#181407}
+.secondary{background:#232737;border-color:#3b4155;color:white}
+.danger{background:transparent;border-color:#703941;color:#ff999e}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:16px}
+.tile{overflow:hidden}
+.art{height:175px;display:grid;place-items:center;padding:12px;background:radial-gradient(ellipse,#2a2f40,#171923)}
+.art img{width:100%;height:100%;object-fit:contain}
+.placeholder{color:#7f879d;font-size:12px}
+.tilebody{padding:13px}
+.tile h3{font-size:14px;margin:0 0 4px}
+.meta{font-size:11px;color:var(--muted);margin:0}
+.price{font:600 22px "Space Grotesk";margin:10px 0 2px}
+.costline,.profitline{font-size:11px;color:var(--muted);margin:4px 0}
+.profitline{color:var(--green)}
+.unknown{color:#f4cb69!important}
+.actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.actions .btn{flex:1;padding:8px 7px;font-size:10px}
+.filter{max-width:350px}
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.empty{padding:30px 15px;text-align:center;border:1px dashed #363c50;border-radius:15px;color:var(--muted);font-size:13px}
+.cartrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.cartrow:last-child{border:0}
+.cartrow strong{display:block;font-size:13px}
+.cartrow small{color:var(--muted);font-size:11px}
+.cartactions{display:flex;align-items:center;gap:8px}
+.cartactions input{width:60px;padding:7px;background:#10121a;color:white;border:1px solid var(--line);border-radius:7px}
+.cartfoot{display:flex;align-items:center;justify-content:space-between;gap:15px;border-top:1px solid var(--line);padding-top:16px;margin-top:15px}
+.cartfoot strong{display:block;font:600 24px "Space Grotesk"}
+.sales{display:grid;gap:12px}
+.sale{padding:17px}
+.saletop{display:flex;justify-content:space-between;gap:10px}
+.saletop h3{font-size:13px;margin:0}
+.date{font-size:11px;color:var(--muted)}
+.saleitems{font-size:12px;margin:12px 0}
+.metrics{display:flex;flex-wrap:wrap;gap:16px 25px;border-top:1px solid var(--line);padding-top:12px}
+.metrics span,.metrics strong{display:block}
+.metrics span{font-size:10px;color:var(--muted)}
+.metrics strong{font-size:13px}
+.details{font-size:11px;color:var(--muted);margin-top:10px}
+.backup{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.backup h3{margin:0 0 5px;font-size:14px}
+.backup p{font-size:12px;color:var(--muted);margin:0;max-width:650px}
+.backupactions{display:flex;gap:8px;flex-wrap:wrap}
+.footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:24px 0 32px;border-top:1px solid var(--line);font-size:10px;color:#7f869a}
+.notice{position:sticky;top:80px;z-index:4;padding:12px 15px;margin:-25px 0 25px;border-radius:10px;background:#183326;border:1px solid #3c684f;color:#c3f4d4;font-size:12px}
+.notice.error{background:#381d24;border-color:#7b3c44;color:#ffd0d3}
+.notice[hidden]{display:none}
+dialog{width:min(600px,calc(100% - 24px));max-height:90vh;overflow:auto;background:var(--panel);color:white;border:1px solid var(--line);border-radius:17px;padding:22px}
+dialog::backdrop{background:#05060bd9}
+.dialogfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ball{width:90px;height:90px;border-width:8px}.ball:before{height:8px;top:calc(50% - 4px)}.ball:after{width:30px;height:30px;top:calc(50% - 15px);left:calc(50% - 15px);border-width:6px}}
 @media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.art{height:135px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:25px 20px;margin:20px 0 38px}.ball{width:56px;height:56px;border-width:5px}.ball:before{height:5px;top:calc(50% - 2.5px)}.ball:after{width:22px;height:22px;top:calc(50% - 11px);left:calc(50% - 11px);border-width:4px}.backup{align-items:flex-start;flex-direction:column}.row{flex-direction:column}.heading{align-items:flex-start}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:23px}.header{align-items:flex-start;flex-direction:column}.cartfoot{align-items:flex-end}}
-</style></head>
+</style>
+</head>
 <body>
-<header class="header"><a class="brand" href="#"><span class="mark">P</span><span><strong>PokéSeller</strong><small>Card inventory & sales</small></span></a><nav><a href="#dashboard">Dashboard</a><a href="#search">Find cards</a><a href="#add">Add card</a><a href="#inventory">Inventory</a><a href="#cart">Cart <b id="badge">0</b></a><a href="#sales">Sales</a><a href="#backup">Backup</a></nav></header>
+<header class="header">
+<a class="brand" href="#"><span class="mark">P</span><span><strong>PokéSeller</strong><small>Card inventory & sales</small></span></a>
+<nav><a href="#dashboard">Dashboard</a><a href="#search">Find cards</a><a href="#add">Add card</a><a href="#inventory">Inventory</a><a href="#cart">Cart <b id="badge">0</b></a><a href="#sales">Sales</a><a href="#backup">Backup</a></nav>
+</header>
 <main class="shell">
 <section class="hero"><div><p class="eyebrow">YOUR COLLECTION, ORGANIZED</p><h1>Know your cards.<br><span>Know your numbers.</span></h1><p>Track your Pokémon card inventory, sales and profit — right in your browser.</p></div><div class="ball" aria-hidden="true"></div></section>
 <div id="notice" class="notice" role="status" hidden></div>
-<section id="dashboard" class="section"><div class="heading"><div><p class="eyebrow">AT A GLANCE</p><h2>Dashboard</h2></div><span class="subtle">Saved in this browser</span></div><div class="stats">
-<div class="stat"><span>Unique card entries</span><strong id="unique">0</strong><small>Different inventory entries</small></div><div class="stat"><span>Cards in stock</span><strong id="stock">0</strong><small>Individual cards</small></div><div class="stat"><span>Inventory selling value</span><strong id="invValue">€0.00</strong><small>At current listed prices</small></div><div class="stat"><span>Known inventory cost</span><strong id="invCost">€0.00</strong><small>Unknown costs excluded</small></div><div class="stat"><span>Completed sales</span><strong id="saleCount">0</strong><small>Recorded transactions</small></div><div class="stat"><span>Total sales revenue</span><strong id="revenue">€0.00</strong><small>Completed sales</small></div><div class="stat"><span>Recorded sales profit</span><strong class="green" id="profit">€0.00</strong><small id="profitFoot">No sales yet</small></div><div class="stat"><span>Sales with known costs</span><strong id="knownSales">0 / 0</strong><small>Only these count toward profit</small></div></div><p class="note">Profit is calculated only when purchase cost is known for every item in a sale. A blank cost is unknown — not €0.</p></section>
-<section id="search" class="section"><div class="heading"><div><p class="eyebrow">CARD DATABASE</p><h2>Find Pokémon cards</h2></div></div><p class="intro">Search TCGdex online, then add a result to your inventory. Manual entry works offline.</p><form id="searchForm" class="row"><label class="sr" for="searchInput">Search cards</label><input id="searchInput" placeholder="Pikachu, Charizard…" maxlength="100"><button class="btn primary" id="searchButton">Search cards</button></form><p id="searchStatus" class="muted"></p><div id="results" class="grid"></div></section>
-<section id="add" class="section"><div class="heading"><div><p class="eyebrow">MANUAL ENTRY</p><h2>Add a card manually</h2></div></div><form id="addForm" class="panel"><div class="formgrid"><label>Card name<input id="name" required maxlength="100" placeholder="Pikachu"></label><label>Set<input id="set" maxlength="100" placeholder="Optional"></label><label>Card number<input id="number" maxlength="30" placeholder="025/165"></label><label>Selling price per card (€)<input id="price" type="number" required min="0" max="1000000" step=".01" placeholder="5.00"></label><label>Purchase cost per card (€)<input id="cost" type="number" min="0" max="1000000" step=".01" placeholder="Leave blank if unknown"></label><label>Quantity<input id="quantity" type="number" required min="1" max="100000" step="1" value="1"></label><label class="full">Card image URL (optional)<input id="image" type="url" maxlength="1000" placeholder="https://…"></label></div><p class="help">Enter 0 only if it genuinely cost you nothing. Leave the cost blank if unknown.</p><button class="btn primary">Add to inventory</button></form></section>
-<section id="inventory" class="section"><div class="heading"><div><p class="eyebrow">YOUR COLLECTION</p><h2>My inventory</h2></div><button class="btn secondary" id="csv">Export CSV</button></div><div class="toolbar"><label class="sr" for="filter">Filter inventory</label><input class="filter" id="filter" placeholder="Filter your inventory…"><span id="count" class="subtle"></span></div><div id="inventoryGrid" class="grid"></div><div id="inventoryEmpty" class="empty" hidden>Your inventory is empty. Search for a card or add one manually.</div></section>
-<section id="cart" class="section"><div class="heading"><div><p class="eyebrow">READY TO CHECK OUT</p><h2>Cart</h2></div></div><div class="panel"><div id="cartItems"></div><div class="cartfoot"><div><span class="muted">Total</span><strong id="cartTotal">€0.00</strong></div><button id="checkout" class="btn primary" disabled>Complete sale</button></div></div></section>
-<section id="sales" class="section"><div class="heading"><div><p class="eyebrow">TRANSACTION LOG</p><h2>Sales history</h2></div><button id="clearSales" class="btn danger">Clear history</button></div><p class="intro">Clearing history does not return sold cards to inventory.</p><div id="salesList" class="sales"></div><div id="salesEmpty" class="empty" hidden>No sales yet.</div></section>
-<section id="backup" class="section"><div class="heading"><div><p class="eyebrow">YOUR DATA</p><h2>Backup & restore</h2></div></div><div class="panel backup"><div><h3>Keep a copy of your data</h3><p>Download a JSON backup regularly. Restoring replaces the current inventory and sales.</p></div><div class="backupactions"><button id="backup" class="btn secondary">Download backup</button><label class="btn secondary">Restore backup<input id="restore" type="file" accept=".json,application/json" hidden></label></div></div></section>
+
+<section id="dashboard" class="section">
+<div class="heading"><div><p class="eyebrow">AT A GLANCE</p><h2>Dashboard</h2></div><span class="subtle">Saved in this browser</span></div>
+<div class="stats">
+<div class="stat"><span>Unique card entries</span><strong id="unique">0</strong><small>Different inventory entries</small></div>
+<div class="stat"><span>Cards in stock</span><strong id="stock">0</strong><small>Individual cards</small></div>
+<div class="stat"><span>Inventory selling value</span><strong id="invValue">€0.00</strong><small>At current listed prices</small></div>
+<div class="stat"><span>Known inventory cost</span><strong id="invCost">€0.00</strong><small>Unknown costs excluded</small></div>
+<div class="stat"><span>Completed sales</span><strong id="saleCount">0</strong><small>Recorded transactions</small></div>
+<div class="stat"><span>Total sales revenue</span><strong id="revenue">€0.00</strong><small>Completed sales</small></div>
+<div class="stat"><span>Recorded sales profit</span><strong class="green" id="profit">€0.00</strong><small id="profitFoot">No sales yet</small></div>
+<div class="stat"><span>Sales with known costs</span><strong id="knownSales">0 / 0</strong><small>Only these count toward profit</small></div>
+</div>
+<p class="note">Profit is calculated only when purchase cost is known for every item in a sale. A blank cost is unknown — not €0.</p>
+</section>
+
+<section id="search" class="section">
+<div class="heading"><div><p class="eyebrow">CARD DATABASE</p><h2>Find Pokémon cards</h2></div></div>
+<p class="intro">Search TCGdex online, then add a result to your inventory. Manual entry works offline.</p>
+<form id="searchForm" class="row"><label class="sr" for="searchInput">Search cards</label><input id="searchInput" placeholder="Pikachu, Charizard…" maxlength="100"><button class="btn primary" id="searchButton">Search cards</button></form>
+<p id="searchStatus" class="muted"></p><div id="results" class="grid"></div>
+</section>
+
+<section id="add" class="section">
+<div class="heading"><div><p class="eyebrow">MANUAL ENTRY</p><h2>Add a card manually</h2></div></div>
+<form id="addForm" class="panel"><div class="formgrid">
+<label>Card name<input id="name" required maxlength="100" placeholder="Pikachu"></label>
+<label>Set<input id="set" maxlength="100" placeholder="Optional"></label>
+<label>Card number<input id="number" maxlength="30" placeholder="025/165"></label>
+<label>Selling price per card (€)<input id="price" type="number" required min="0" max="1000000" step=".01" placeholder="5.00"></label>
+<label>Purchase cost per card (€)<input id="cost" type="number" min="0" max="1000000" step=".01" placeholder="Leave blank if unknown"></label>
+<label>Quantity<input id="quantity" type="number" required min="1" max="100000" step="1" value="1"></label>
+<label class="full">Card image URL (optional)<input id="image" type="url" maxlength="1000" placeholder="https://…"></label>
+</div><p class="help">Enter 0 only if it genuinely cost you nothing. Leave the cost blank if unknown.</p><button class="btn primary">Add to inventory</button></form>
+</section>
+
+<section id="inventory" class="section">
+<div class="heading"><div><p class="eyebrow">YOUR COLLECTION</p><h2>My inventory</h2></div><button class="btn secondary" id="csv">Export CSV</button></div>
+<div class="toolbar"><label class="sr" for="filter">Filter inventory</label><input class="filter" id="filter" placeholder="Filter your inventory…"><span id="count" class="subtle"></span></div>
+<div id="inventoryGrid" class="grid"></div><div id="inventoryEmpty" class="empty" hidden>Your inventory is empty. Search for a card or add one manually.</div>
+</section>
+
+<section id="cart" class="section">
+<div class="heading"><div><p class="eyebrow">READY TO CHECK OUT</p><h2>Cart</h2></div></div>
+<div class="panel"><div id="cartItems"></div><div class="cartfoot"><div><span class="muted">Total</span><strong id="cartTotal">€0.00</strong></div><button id="checkout" class="btn primary" disabled>Complete sale</button></div></div>
+</section>
+
+<section id="sales" class="section">
+<div class="heading"><div><p class="eyebrow">TRANSACTION LOG</p><h2>Sales history</h2></div><button id="clearSales" class="btn danger">Clear history</button></div>
+<p class="intro">Clearing history does not return sold cards to inventory.</p><div id="salesList" class="sales"></div><div id="salesEmpty" class="empty" hidden>No sales yet.</div>
+</section>
+
+<section id="backup" class="section">
+<div class="heading"><div><p class="eyebrow">YOUR DATA</p><h2>Backup & restore</h2></div></div>
+<div class="panel backup"><div><h3>Keep a copy of your data</h3><p>Download a JSON backup regularly. Restoring replaces the current inventory and sales.</p></div><div class="backupactions"><button id="backup" class="btn secondary">Download backup</button><label class="btn secondary">Restore backup<input id="restore" type="file" accept=".json,application/json" hidden></label></div></div>
+</section>
+
 <footer class="footer"><span>PokéSeller</span><span>Unofficial fan-made tool; not affiliated with Pokémon or Nintendo.</span><span>Data stays in this browser unless you export it.</span></footer>
 </main>
-<dialog id="editDialog"><form id="editForm"><div class="heading"><div><p class="eyebrow">INVENTORY</p><h2>Edit card</h2></div><button type="button" class="btn secondary" id="closeEdit">×</button></div><input id="editId" type="hidden"><div class="formgrid"><label>Card name<input id="editName" required maxlength="100"></label><label>Set<input id="editSet" maxlength="100"></label><label>Card number<input id="editNumber" maxlength="30"></label><label>Selling price (€)<input id="editPrice" type="number" min="0" max="1000000" step=".01" required></label><label>Purchase cost (€)<input id="editCost" type="number" min="0" max="1000000" step=".01" placeholder="Leave blank if unknown"></label><label>Quantity<input id="editQty" type="number" min="1" max="100000" step="1" required></label><label class="full">Image URL<input id="editImage" type="url" maxlength="1000"></label></div><p class="help">Blank purchase cost means unknown; enter 0 only if the card was genuinely free.</p><div class="dialogfoot"><button type="button" class="btn secondary" id="cancelEdit">Cancel</button><button class="btn primary">Save changes</button></div></form></dialog>
+
+<dialog id="editDialog"><form id="editForm">
+<div class="heading"><div><p class="eyebrow">INVENTORY</p><h2>Edit card</h2></div><button type="button" class="btn secondary" id="closeEdit">×</button></div>
+<input id="editId" type="hidden">
+<div class="formgrid">
+<label>Card name<input id="editName" required maxlength="100"></label>
+<label>Set<input id="editSet" maxlength="100"></label>
+<label>Card number<input id="editNumber" maxlength="30"></label>
+<label>Selling price (€)<input id="editPrice" type="number" min="0" max="1000000" step=".01" required></label>
+<label>Purchase cost (€)<input id="editCost" type="number" min="0" max="1000000" step=".01" placeholder="Leave blank if unknown"></label>
+<label>Quantity<input id="editQty" type="number" min="1" max="100000" step="1" required></label>
+<label class="full">Image URL<input id="editImage" type="url" maxlength="1000"></label>
+</div>
+<p class="help">Blank purchase cost means unknown; enter 0 only if the card was genuinely free.</p>
+<div class="dialogfoot"><button type="button" class="btn secondary" id="cancelEdit">Cancel</button><button class="btn primary">Save changes</button></div>
+</form></dialog>
+
 <script>
 "use strict";
-const KEY="pokeSeller_v1", $=s=>document.querySelector(s), money=n=>new Intl.NumberFormat("en-BE",{style:"currency",currency:"EUR"}).format(Number(n)||0), uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(16)+Math.random().toString(16).slice(2,10);
+
+const KEY="pokeSeller_v1",
+$=s=>document.querySelector(s),
+money=n=>new Intl.NumberFormat("en-BE",{style:"currency",currency:"EUR"}).format(Number(n)||0),
+uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(16)+Math.random().toString(16).slice(2,10);
+
 let cards=[],sales=[],cart=[],noticeTimer;
-const text=(v,n=200)=>String(v??"").trim().slice(0,n), num=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
-function normalCard(c){let known=typeof c.costKnown==="boolean"?c.costKnown:(c.cost!==undefined&&c.cost!==null&&num(c.cost)>0);return{id:text(c.id,100)||uid(),name:text(c.name,100)||"Unnamed card",set:text(c.set,100)||"Unknown set",number:text(c.number,30),image:validUrl(c.image),price:Math.max(0,num(c.price)),costKnown:known,cost:known?Math.max(0,num(c.cost)):null,quantity:Math.max(0,Math.floor(num(c.quantity)))}}
-function normalSale(s){let items=Array.isArray(s.items)?s.items.map(i=>{let known=i.costKnown===true||(i.costKnown!==false&&i.cost!==undefined&&i.cost!==null);return{id:text(i.id,100),name:text(i.name,100)||"Unknown card",price:Math.max(0,num(i.price)),quantity:Math.max(0,Math.floor(num(i.quantity))),costKnown:known,cost:known?Math.max(0,num(i.cost)):null}}):[];let total=Math.max(0,num(s.total,items.reduce((a,i)=>a+i.price*i.quantity,0)));let known=s.costKnown===true||(s.costKnown!==false&&items.length>0&&items.every(i=>i.costKnown));let cost=known?items.reduce((a,i)=>a+i.cost*i.quantity,0):null;return{id:text(s.id,100)||uid(),date:s.date||new Date().toISOString(),items,total,costKnown:known,totalCost:cost,profit:known?total-cost:null}}
-function validUrl(v){if(!v)return"";try{let u=new URL(v);return["http:","https:"].includes(u.protocol)?u.href:""}catch{return""}}
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function notice(msg,error=false){let el=$("#notice");el.textContent=msg;el.classList.toggle("error",error);el.hidden=false;clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>el.hidden=true,5000)}
-function save(){try{localStorage.setItem(KEY,JSON.stringify({version:3,cards,sales}));return true}catch(e){notice("Could not save data. Download a backup and check browser storage.",true);return false}}
-function load(){try{let d=JSON.parse(localStorage.getItem(KEY)||"{}");cards=Array.isArray(d.cards)?d.cards.map(normalCard):[];sales=Array.isArray(d.sales)?d.sales.map(normalSale):[]}catch(e){notice("Saved data could not be read. Try a backup.",true)}}
-function imageHtml(url,name){url=validUrl(url);return url?`<img src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'placeholder',textContent:'Picture unavailable'}))">`:`<div class="placeholder">No picture available</div>`}
-function renderDash(){let stock=cards.reduce((a,c)=>a+c.quantity,0),value=cards.reduce((a,c)=>a+c.price*c.quantity,0),cost=cards.reduce((a,c)=>a+(c.costKnown?c.cost*c.quantity:0),0),known=sales.filter(s=>s.costKnown),rev=sales.reduce((a,s)=>a+s.total,0),profit=known.reduce((a,s)=>a+s.profit,0);$("#unique").textContent=cards.length;$("#stock").textContent=stock;$("#invValue").textContent=money(value);$("#invCost").textContent=money(cost);$("#saleCount").textContent=sales.length;$("#revenue").textContent=money(rev);$("#profit").textContent=money(profit);$("#knownSales").textContent=`${known.length} / ${sales.length}`;$("#profitFoot").textContent=sales.length?`${sales.length-known.length} sale(s) excluded: costs unknown`:"No sales yet"}
-function renderInventory(){let q=$("#filter").value.toLowerCase().trim(),arr=cards.filter(c=>`${c.name} ${c.set} ${c.number}`.toLowerCase().includes(q)),grid=$("#inventoryGrid");grid.innerHTML="";arr.forEach(c=>{let el=document.createElement("article");el.className="tile";el.innerHTML=`<div class="art">${imageHtml(c.image,c.name)}</div><div class="tilebody"><h3>${esc(c.name)}</h3><p class="meta">${esc(c.set)} · Number: ${esc(c.number||"—")}</p><p class="price">${money(c.price)}</p><p class="costline ${c.costKnown?"":"unknown"}">Purchase cost: ${c.costKnown?money(c.cost):"Unknown"}</p><p class="profitline ${c.costKnown?"":"unknown"}">Profit per copy: ${c.costKnown?money(c.price-c.cost):"Unknown"}</p><p class="meta">Quantity: ${c.quantity}</p><div class="actions"><button class="btn primary" data-act="cart" data-id="${esc(c.id)}" ${c.quantity<1?"disabled":""}>Add to cart</button><button class="btn secondary" data-act="edit" data-id="${esc(c.id)}">Edit</button><button class="btn danger" data-act="delete" data-id="${esc(c.id)}">Delete</button></div></div>`;grid.append(el)});$("#count").textContent=`${arr.length} item(s) shown · ${cards.length} unique card entries`;$("#inventoryEmpty").hidden=cards.length>0;if(cards.length&&arr.length===0)grid.innerHTML='<div class="empty">No matching cards.</div>'}
-function renderCart(){cart=cart.filter(i=>cards.some(c=>c.id===i.id&&c.quantity>0));let box=$("#cartItems");box.innerHTML="";if(!cart.length)box.innerHTML='<div class="empty">Your cart is empty.</div>';cart.forEach(i=>{let c=cards.find(c=>c.id===i.id);i.quantity=Math.min(i.quantity,c.quantity);let row=document.createElement("div");row.className="cartrow";row.innerHTML=`<div><strong>${esc(c.name)}</strong><small>${money(c.price)} each · In stock: ${c.quantity}</small></div><div class="cartactions"><input type="number" min="1" max="${c.quantity}" value="${i.quantity}" aria-label="Quantity" data-qty="${esc(c.id)}"><strong>${money(c.price*i.quantity)}</strong><button class="btn secondary" data-remove="${esc(c.id)}">×</button></div>`;box.append(row)});$("#cartTotal").textContent=money(cart.reduce((a,i)=>a+(cards.find(c=>c.id===i.id)?.price||0)*i.quantity,0));$("#checkout").disabled=!cart.length;$("#badge").textContent=cart.reduce((a,i)=>a+i.quantity,0)}
-function renderSales(){let box=$("#salesList");box.innerHTML="";$("#salesEmpty").hidden=!!sales.length;[...sales].reverse().forEach(s=>{let el=document.createElement("article");el.className="sale";let date=new Date(s.date);let dateText=isNaN(date.getTime())?"Unknown date":date.toLocaleString();let items=s.items.length?s.items.map(i=>`<div>${esc(i.name)} × ${i.quantity} (${money(i.price)} each)</div>`).join(""):"<div class='muted'>No item details available (older sale)</div>";el.innerHTML=`<div class="saletop"><h3>Sale ${esc(s.id.slice(0,8))}</h3><span class="date">${esc(dateText)}</span></div><div class="saleitems">${items}</div><div class="metrics"><div><span>Revenue</span><strong>${money(s.total)}</strong></div>${s.costKnown?`<div><span>Card cost</span><strong>${money(s.totalCost)}</strong></div><div><span>Profit</span><strong class="green">${money(s.profit)}</strong></div>`:`<div><span>Profit</span><strong class="unknown">Unavailable — cost unknown</strong></div>`}</div>${s.costKnown?"":'<details class="details"><summary>Why is profit unavailable?</summary>At least one item had no known purchase cost when this sale was recorded. Editing current inventory costs will not rewrite past sales.</details>'}`;box.append(el)})}
+const text=(v,n=200)=>String(v??"").trim().slice(0,n),
+num=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
+
+function normalCard(c){
+let known=typeof c.costKnown==="boolean"?c.costKnown:(c.cost!==undefined&&c.cost!==null&&num(c.cost)>0);
+return{id:text(c.id,100)||uid(),name:text(c.name,100)||"Unnamed card",set:text(c.set,100)||"Unknown set",number:text(c.number,30),image:validUrl(c.image),price:Math.max(0,num(c.price)),costKnown:known,cost:known?Math.max(0,num(c.cost)):null,quantity:Math.max(0,Math.floor(num(c.quantity)))}
+}
+
+function normalSale(s){
+let items=Array.isArray(s.items)?s.items.map(i=>{
+let known=i.costKnown===true||(i.costKnown!==false&&i.cost!==undefined&&i.cost!==null);
+return{id:text(i.id,100),name:text(i.name,100)||"Unknown card",price:Math.max(0,num(i.price)),quantity:Math.max(0,Math.floor(num(i.quantity))),costKnown:known,cost:known?Math.max(0,num(i.cost)):null}
+}):[];
+let total=Math.max(0,num(s.total,items.reduce((a,i)=>a+i.price*i.quantity,0)));
+let known=s.costKnown===true||(s.costKnown!==false&&items.length>0&&items.every(i=>i.costKnown));
+let cost=known?items.reduce((a,i)=>a+i.cost*i.quantity,0):null;
+return{id:text(s.id,100)||uid(),date:s.date||new Date().toISOString(),items,total,costKnown:known,totalCost:cost,profit:known?total-cost:null}
+}
+
+function validUrl(v){
+if(!v)return"";
+try{let u=new URL(v);return["http:","https:"].includes(u.protocol)?u.href:""}catch{return""}
+}
+
+function esc(v){
+return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))
+}
+
+function notice(msg,error=false){
+let el=$("#notice");
+el.textContent=msg;
+el.classList.toggle("error",error);
+el.hidden=false;
+clearTimeout(noticeTimer);
+noticeTimer=setTimeout(()=>el.hidden=true,5000)
+}
+
+function save(){
+try{localStorage.setItem(KEY,JSON.stringify({version:3,cards,sales}));return true}
+catch(e){notice("Could not save data. Download a backup and check browser storage.",true);return false}
+}
+
+function load(){
+try{
+let d=JSON.parse(localStorage.getItem(KEY)||"{}");
+cards=Array.isArray(d.cards)?d.cards.map(normalCard):[];
+sales=Array.isArray(d.sales)?d.sales.map(normalSale):[]
+}catch(e){notice("Saved data could not be read. Try a backup.",true)}
+}
+
+/* Improved image handling: tries several TCGdex image formats if one fails. */
+function imageHtml(url,name){
+url=validUrl(url);
+if(!url)return `<div class="placeholder">No picture available</div>`;
+return `<img src="${esc(url)}" alt="${esc(name)}" loading="lazy" onerror="imageFallback(this)">`;
+}
+
+function imageFallback(img){
+const tried=img.dataset.tried||"";
+const base=img.dataset.imageBase;
+const candidates=[];
+if(base){
+candidates.push(`${base}/high.png`,`${base}/low.png`,`${base}/high.webp`,`${base}/low.webp`);
+}
+const next=candidates.find(u=>u!==img.src&&!tried.split("|").includes(u));
+if(next){
+img.dataset.tried=(tried?tried+"|":"")+img.src;
+img.src=next;
+return;
+}
+img.replaceWith(Object.assign(document.createElement("div"),{className:"placeholder",textContent:"Picture unavailable"}));
+}
+
+function renderDash(){
+let stock=cards.reduce((a,c)=>a+c.quantity,0),
+value=cards.reduce((a,c)=>a+c.price*c.quantity,0),
+cost=cards.reduce((a,c)=>a+(c.costKnown?c.cost*c.quantity:0),0),
+known=sales.filter(s=>s.costKnown),
+rev=sales.reduce((a,s)=>a+s.total,0),
+profit=known.reduce((a,s)=>a+s.profit,0);
+$("#unique").textContent=cards.length;
+$("#stock").textContent=stock;
+$("#invValue").textContent=money(value);
+$("#invCost").textContent=money(cost);
+$("#saleCount").textContent=sales.length;
+$("#revenue").textContent=money(rev);
+$("#profit").textContent=money(profit);
+$("#knownSales").textContent=`${known.length} / ${sales.length}`;
+$("#profitFoot").textContent=sales.length?`${sales.length-known.length} sale(s) excluded: costs unknown`:"No sales yet"
+}
+
+function renderInventory(){
+let q=$("#filter").value.toLowerCase().trim(),
+arr=cards.filter(c=>`${c.name} ${c.set} ${c.number}`.toLowerCase().includes(q)),
+grid=$("#inventoryGrid");
+grid.innerHTML="";
+arr.forEach(c=>{
+let el=document.createElement("article");
+el.className="tile";
+el.innerHTML=`<div class="art">${imageHtml(c.image,c.name)}</div><div class="tilebody"><h3>${esc(c.name)}</h3><p class="meta">${esc(c.set)} · Number: ${esc(c.number||"—")}</p><p class="price">${money(c.price)}</p><p class="costline ${c.costKnown?"":"unknown"}">Purchase cost: ${c.costKnown?money(c.cost):"Unknown"}</p><p class="profitline ${c.costKnown?"":"unknown"}">Profit per copy: ${c.costKnown?money(c.price-c.cost):"Unknown"}</p><p class="meta">Quantity: ${c.quantity}</p><div class="actions"><button class="btn primary" data-act="cart" data-id="${esc(c.id)}" ${c.quantity<1?"disabled":""}>Add to cart</button><button class="btn secondary" data-act="edit" data-id="${esc(c.id)}">Edit</button><button class="btn danger" data-act="delete" data-id="${esc(c.id)}">Delete</button></div></div>`;
+grid.append(el)
+});
+$("#count").textContent=`${arr.length} item(s) shown · ${cards.length} unique card entries`;
+$("#inventoryEmpty").hidden=cards.length>0;
+if(cards.length&&arr.length===0)grid.innerHTML='<div class="empty">No matching cards.</div>'
+}
+
+function renderCart(){
+cart=cart.filter(i=>cards.some(c=>c.id===i.id&&c.quantity>0));
+let box=$("#cartItems");
+box.innerHTML="";
+if(!cart.length)box.innerHTML='<div class="empty">Your cart is empty.</div>';
+cart.forEach(i=>{
+let c=cards.find(c=>c.id===i.id);
+i.quantity=Math.min(i.quantity,c.quantity);
+let row=document.createElement("div");
+row.className="cartrow";
+row.innerHTML=`<div><strong>${esc(c.name)}</strong><small>${money(c.price)} each · In stock: ${c.quantity}</small></div><div class="cartactions"><input type="number" min="1" max="${c.quantity}" value="${i.quantity}" aria-label="Quantity" data-qty="${esc(c.id)}"><strong>${money(c.price*i.quantity)}</strong><button class="btn secondary" data-remove="${esc(c.id)}">×</button></div>`;
+box.append(row)
+});
+$("#cartTotal").textContent=money(cart.reduce((a,i)=>a+(cards.find(c=>c.id===i.id)?.price||0)*i.quantity,0));
+$("#checkout").disabled=!cart.length;
+$("#badge").textContent=cart.reduce((a,i)=>a+i.quantity,0)
+}
+
+function renderSales(){
+let box=$("#salesList");
+box.innerHTML="";
+$("#salesEmpty").hidden=!!sales.length;
+[...sales].reverse().forEach(s=>{
+let el=document.createElement("article");
+el.className="sale";
+let date=new Date(s.date);
+let dateText=isNaN(date.getTime())?"Unknown date":date.toLocaleString();
+let items=s.items.length?s.items.map(i=>`<div>${esc(i.name)} × ${i.quantity} (${money(i.price)} each)</div>`).join(""):"<div class='muted'>No item details available (older sale)</div>";
+el.innerHTML=`<div class="saletop"><h3>Sale ${esc(s.id.slice(0,8))}</h3><span class="date">${esc(dateText)}</span></div><div class="saleitems">${items}</div><div class="metrics"><div><span>Revenue</span><strong>${money(s.total)}</strong></div>${s.costKnown?`<div><span>Card cost</span><strong>${money(s.totalCost)}</strong></div><div><span>Profit</span><strong class="green">${money(s.profit)}</strong></div>`:`<div><span>Profit</span><strong class="unknown">Unavailable — cost unknown</strong></div>`}</div>${s.costKnown?"":'<details class="details"><summary>Why is profit unavailable?</summary>At least one item had no known purchase cost when this sale was recorded. Editing current inventory costs will not rewrite past sales.</details>'}`;
+box.append(el)
+})
+}
+
 function render(){renderDash();renderInventory();renderCart();renderSales()}
-function addCard(c){if(!c.name||!Number.isFinite(c.price)||c.price<0||!Number.isInteger(c.quantity)||c.quantity<1)throw Error("Enter a card name, valid price, and whole-number quantity of at least 1.");if(c.costKnown&&(!Number.isFinite(c.cost)||c.cost<0))throw Error("Enter a valid purchase cost or leave it blank.");cards.push(normalCard({...c,id:uid()}));save();render()}
-function edit(id){let c=cards.find(c=>c.id===id);if(!c)return;$("#editId").value=id;$("#editName").value=c.name;$("#editSet").value=c.set==="Unknown set"?"":c.set;$("#editNumber").value=c.number;$("#editPrice").value=c.price;$("#editCost").value=c.costKnown?c.cost:"";$("#editQty").value=c.quantity;$("#editImage").value=c.image;$("#editDialog").showModal()}
-function download(name,data,type){let url=URL.createObjectURL(new Blob([data],{type})),a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function renderResults(data){let box=$("#results");box.innerHTML="";data.slice(0,12).forEach(r=>{let result={name:r.name||"Unknown card",set:r.set?.name||"Unknown set",number:r.localId||"",image:r.image?`${r.image}/high.webp`:""};let el=document.createElement("article");el.className="tile";el.innerHTML=`<div class="art">${imageHtml(result.image,result.name)}</div><div class="tilebody"><h3>${esc(result.name)}</h3><p class="meta">${esc(result.set)} · ${esc(result.number)}</p><div class="actions"><button class="btn primary" data-add-search="1">Add this card</button></div></div>`;el._result=result;box.append(el)})}
-$("#addForm").addEventListener("submit",e=>{e.preventDefault();let cv=$("#cost").value.trim();try{addCard({name:text($("#name").value,100),set:text($("#set").value,100)||"Unknown set",number:text($("#number").value,30),price:num($("#price").value,-1),cost:cv===""?null:num(cv,-1),costKnown:cv!=="",quantity:num($("#quantity").value,0),image:validUrl($("#image").value)});e.target.reset();$("#quantity").value="1";notice("Card added to inventory.")}catch(err){notice(err.message,true)}});
-$("#searchForm").addEventListener("submit",async e=>{e.preventDefault();let q=$("#searchInput").value.trim();if(!q){$("#searchStatus").textContent="Enter a card name to search.";return}$("#searchStatus").textContent="Searching TCGdex…";$("#searchButton").disabled=true;try{let res=await fetch("https://api.tcgdex.net/v2/en/cards?name="+encodeURIComponent(q));if(!res.ok)throw Error("Search service unavailable");let data=await res.json();$("#searchStatus").textContent=data.length?`Showing up to ${Math.min(data.length,12)} results.`:"No results found. Try another spelling or add manually.";renderResults(Array.isArray(data)?data:[])}catch(err){$("#searchStatus").textContent="Search is unavailable right now. Check your connection or add the card manually."}finally{$("#searchButton").disabled=false}});
-$("#results").addEventListener("click",e=>{if(!e.target.closest("[data-add-search]"))return;let r=e.target.closest(".tile")._result,p=prompt(`Selling price per copy for ${r.name} (€):`,"5.00");if(p===null)return;let price=Number(p);if(!Number.isFinite(price)||price<0)return notice("Enter a valid price.",true);let c=prompt("Purchase cost per copy (€). Leave blank if unknown:","");if(c===null)return;let known=c.trim()!=="";let cost=known?Number(c):null;if(known&&(!Number.isFinite(cost)||cost<0))return notice("Enter a valid cost or leave blank.",true);let q=Number(prompt("Quantity to add:","1"));if(!Number.isInteger(q)||q<1)return notice("Quantity must be a whole number of at least 1.",true);try{addCard({...r,price,cost,costKnown:known,quantity:q});notice("Card added to inventory.")}catch(err){notice(err.message,true)}});
-$("#inventoryGrid").addEventListener("click",e=>{let b=e.target.closest("[data-act]");if(!b)return;let id=b.dataset.id;if(b.dataset.act==="cart"){let c=cards.find(c=>c.id===id),i=cart.find(i=>i.id===id);if(!c)return;if(i){if(i.quantity>=c.quantity)return notice("Cart already contains all available copies.",true);i.quantity++}else cart.push({id,quantity:1});renderCart()}if(b.dataset.act==="edit")edit(id);if(b.dataset.act==="delete"){let c=cards.find(c=>c.id===id);if(c&&confirm(`Delete ${c.name} from inventory? Past sales stay in history.`)){cards=cards.filter(c=>c.id!==id);cart=cart.filter(i=>i.id!==id);save();render();notice("Card deleted.")}}});
+
+function addCard(c){
+if(!c.name||!Number.isFinite(c.price)||c.price<0||!Number.isInteger(c.quantity)||c.quantity<1)throw Error("Enter a card name, valid price, and whole-number quantity of at least 1.");
+if(c.costKnown&&(!Number.isFinite(c.cost)||c.cost<0))throw Error("Enter a valid purchase cost or leave it blank.");
+cards.push(normalCard({...c,id:uid()}));
+save();
+render()
+}
+
+function edit(id){
+let c=cards.find(c=>c.id===id);
+if(!c)return;
+$("#editId").value=id;
+$("#editName").value=c.name;
+$("#editSet").value=c.set==="Unknown set"?"":c.set;
+$("#editNumber").value=c.number;
+$("#editPrice").value=c.price;
+$("#editCost").value=c.costKnown?c.cost:"";
+$("#editQty").value=c.quantity;
+$("#editImage").value=c.image;
+$("#editDialog").showModal()
+}
+
+function download(name,data,type){
+let url=URL.createObjectURL(new Blob([data],{type})),
+a=document.createElement("a");
+a.href=url;a.download=name;document.body.append(a);a.click();a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),1000)
+}
+
+/* FIX 1: Show card details, including the set, after fetching the full record. */
+function renderResults(data){
+const box=$("#results");
+box.innerHTML="";
+data.slice(0,12).forEach(r=>{
+const base=typeof r.image==="string"?r.image.replace(/\/$/,""):"";
+const result={
+id:r.id||"",
+name:r.name||"Unknown card",
+set:(typeof r.set==="string"?r.set:r.set?.name)||"Unknown set",
+number:r.localId||"",
+image:base?`${base}/high.png`:""
+};
+const el=document.createElement("article");
+el.className="tile";
+el.innerHTML=`<div class="art">${imageHtml(result.image,result.name)}</div><div class="tilebody"><h3>${esc(result.name)}</h3><p class="meta">${esc(result.set)} · ${esc(result.number)}</p><div class="actions"><button class="btn primary" data-add-search="1">Add this card</button></div></div>`;
+const img=el.querySelector(".art img");
+if(img&&base)img.dataset.imageBase=base;
+el._result=result;
+box.append(el)
+})
+}
+
+$("#addForm").addEventListener("submit",e=>{
+e.preventDefault();
+let cv=$("#cost").value.trim();
+try{
+addCard({name:text($("#name").value,100),set:text($("#set").value,100)||"Unknown set",number:text($("#number").value,30),price:num($("#price").value,-1),cost:cv===""?null:num(cv,-1),costKnown:cv!=="",quantity:num($("#quantity").value,0),image:validUrl($("#image").value)});
+e.target.reset();
+$("#quantity").value="1";
+notice("Card added to inventory.")
+}catch(err){notice(err.message,true)}
+});
+
+/* FIX 2: Fetch full card details so set names are available. */
+$("#searchForm").addEventListener("submit",async e=>{
+e.preventDefault();
+const q=$("#searchInput").value.trim();
+if(!q){$("#searchStatus").textContent="Enter a card name to search.";return}
+$("#searchButton").disabled=true;
+$("#searchStatus").textContent="Searching TCGdex…";
+$("#results").innerHTML="";
+try{
+const response=await fetch("https://api.tcgdex.net/v2/en/cards?name="+encodeURIComponent(q));
+if(!response.ok)throw Error("Search service unavailable");
+const data=await response.json();
+if(!Array.isArray(data))throw Error("Unexpected search response");
+const brief=data.slice(0,12);
+$("#searchStatus").textContent=brief.length?`Loading details for ${brief.length} card(s)…`:"No results found. Try another spelling or add manually.";
+const results=await Promise.all(brief.map(async card=>{
+if(!card.id)return card;
+try{
+const detailResponse=await fetch("https://api.tcgdex.net/v2/en/cards/"+encodeURIComponent(card.id));
+if(!detailResponse.ok)return card;
+const detail=await detailResponse.json();
+return {...card,...detail}
+}catch(error){
+console.warn("Could not load full card details for",card.id,error);
+return card
+}
+}));
+renderResults(results);
+$("#searchStatus").textContent=results.length?`Showing ${results.length} result(s).`:"No results found. Try another spelling or add manually."
+}catch(err){
+console.error("PokéSeller card search failed:",err);
+$("#searchStatus").textContent="Search is unavailable right now. Check your connection and try again."
+}finally{
+$("#searchButton").disabled=false
+}
+});
+
+$("#results").addEventListener("click",e=>{
+if(!e.target.closest("[data-add-search]"))return;
+let r=e.target.closest(".tile")._result,
+p=prompt(`Selling price per copy for ${r.name} (€):`,"5.00");
+if(p===null)return;
+let price=Number(p);
+if(!Number.isFinite(price)||price<0)return notice("Enter a valid price.",true);
+let c=prompt("Purchase cost per copy (€). Leave blank if unknown:","");
+if(c===null)return;
+let known=c.trim()!=="";
+let cost=known?Number(c):null;
+if(known&&(!Number.isFinite(cost)||cost<0))return notice("Enter a valid cost or leave blank.",true);
+let q=Number(prompt("Quantity to add:","1"));
+if(!Number.isInteger(q)||q<1)return notice("Quantity must be a whole number of at least 1.",true);
+try{addCard({...r,price,cost,costKnown:known,quantity:q});notice("Card added to inventory.")}
+catch(err){notice(err.message,true)}
+});
+
+$("#inventoryGrid").addEventListener("click",e=>{
+let b=e.target.closest("[data-act]");
+if(!b)return;
+let id=b.dataset.id;
+if(b.dataset.act==="cart"){
+let c=cards.find(c=>c.id===id),i=cart.find(i=>i.id===id);
+if(!c)return;
+if(i){if(i.quantity>=c.quantity)return notice("Cart already contains all available copies.",true);i.quantity++}
+else cart.push({id,quantity:1});
+renderCart()
+}
+if(b.dataset.act==="edit")edit(id);
+if(b.dataset.act==="delete"){
+let c=cards.find(c=>c.id===id);
+if(c&&confirm(`Delete ${c.name} from inventory? Past sales stay in history.`)){
+cards=cards.filter(c=>c.id!==id);
+cart=cart.filter(i=>i.id!==id);
+save();render();notice("Card deleted.")
+}
+}
+});
+
 $("#filter").addEventListener("input",renderInventory);
-$("#cartItems").addEventListener("change",e=>{let input=e.target.closest("[data-qty]");if(!input)return;let c=cards.find(c=>c.id===input.dataset.qty),i=cart.find(i=>i.id===input.dataset.qty);if(!c||!i)return;let n=Number(input.value);if(!Number.isInteger(n)||n<1)return renderCart();i.quantity=Math.min(n,c.quantity);renderCart()});
-$("#cartItems").addEventListener("click",e=>{let b=e.target.closest("[data-remove]");if(b){cart=cart.filter(i=>i.id!==b.dataset.remove);renderCart()}});
-$("#checkout").addEventListener("click",()=>{if(!cart.length)return;for(let i of cart){let c=cards.find(c=>c.id===i.id);if(!c||i.quantity<1||i.quantity>c.quantity)return notice("Please check the quantities in your cart.",true)}let items=cart.map(i=>{let c=cards.find(c=>c.id===i.id);return{id:c.id,name:c.name,price:c.price,quantity:i.quantity,costKnown:c.costKnown,cost:c.costKnown?c.cost:null}}),total=items.reduce((a,i)=>a+i.price*i.quantity,0),known=items.every(i=>i.costKnown),totalCost=known?items.reduce((a,i)=>a+i.cost*i.quantity,0):null;sales.push({id:uid(),date:new Date().toISOString(),items,total,costKnown:known,totalCost,profit:known?total-totalCost:null});cart.forEach(i=>{let c=cards.find(c=>c.id===i.id);c.quantity-=i.quantity});cards=cards.filter(c=>c.quantity>0);cart=[];save();render();notice(known?"Sale completed; profit recorded.":"Sale completed; profit unavailable because at least one purchase cost is unknown.")});
-$("#editForm").addEventListener("submit",e=>{e.preventDefault();let id=$("#editId").value,c=cards.find(c=>c.id===id);if(!c)return;let cv=$("#editCost").value.trim(),obj={...c,name:text($("#editName").value,100),set:text($("#editSet").value,100)||"Unknown set",number:text($("#editNumber").value,30),price:num($("#editPrice").value,-1),costKnown:cv!=="",cost:cv===""?null:num(cv,-1),quantity:num($("#editQty").value,0),image:validUrl($("#editImage").value)};if(!obj.name||obj.price<0||obj.quantity<1||!Number.isInteger(obj.quantity)||(obj.costKnown&&obj.cost<0))return notice("Check the card details and numbers.",true);Object.assign(c,normalCard(obj));save();render();$("#editDialog").close();notice("Card updated.")});
-$("#closeEdit").addEventListener("click",()=>$("#editDialog").close());$("#cancelEdit").addEventListener("click",()=>$("#editDialog").close());
-$("#csv").addEventListener("click",()=>{let rows=[["Name","Set","Number","Selling price EUR","Purchase cost EUR","Cost known","Quantity","Image URL"],...cards.map(c=>[c.name,c.set,c.number,c.price,c.costKnown?c.cost:"",c.costKnown?"yes":"no",c.quantity,c.image])];let csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");download("pokeseller-inventory.csv","\uFEFF"+csv,"text/csv;charset=utf-8");notice("CSV downloaded.")});
-$("#backup").addEventListener("click",()=>{download("pokeseller-backup-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify({app:"PokéSeller",version:3,exportedAt:new Date().toISOString(),cards,sales},null,2),"application/json");notice("Backup downloaded.")});
-$("#restore").addEventListener("change",async e=>{let file=e.target.files[0];if(!file)return;try{let d=JSON.parse(await file.text());if(!d||!Array.isArray(d.cards)||!Array.isArray(d.sales))throw Error("This is not a valid PokéSeller backup.");if(!confirm(`Restore ${d.cards.length} card entries and ${d.sales.length} sales? This replaces current data.`))return;cards=d.cards.map(normalCard);sales=d.sales.map(normalSale);cart=[];save();render();notice("Backup restored.")}catch(err){notice(err.message||"Could not restore backup.",true)}finally{e.target.value=""}});
-$("#clearSales").addEventListener("click",()=>{if(!sales.length)return notice("No sales history to clear.");if(confirm("Delete all sales history? Inventory will not change. This cannot be undone without a backup.")){sales=[];save();render();notice("Sales history cleared.")}});
-load();render();
-</script></body></html>
+
+$("#cartItems").addEventListener("change",e=>{
+let input=e.target.closest("[data-qty]");
+if(!input)return;
+let c=cards.find(c=>c.id===input.dataset.qty),i=cart.find(i=>i.id===input.dataset.qty);
+if(!c||!i)return;
+let n=Number(input.value);
+if(!Number.isInteger(n)||n<1)return renderCart();
+i.quantity=Math.min(n,c.quantity);
+renderCart()
+});
+
+$("#cartItems").addEventListener("click",e=>{
+let b=e.target.closest("[data-remove]");
+if(b){cart=cart.filter(i=>i.id!==b.dataset.remove);renderCart()}
+});
+
+$("#checkout").addEventListener("click",()=>{
+if(!cart.length)return;
+for(let i of cart){
+let c=cards.find(c=>c.id===i.id);
+if(!c||i.quantity<1||i.quantity>c.quantity)return notice("Please check the quantities in your cart.",true)
+}
+let items=cart.map(i=>{
+let c=cards.find(c=>c.id===i.id);
+return{id:c.id,name:c.name,price:c.price,quantity:i.quantity,costKnown:c.costKnown,cost:c.costKnown?c.cost:null}
+}),
+total=items.reduce((a,i)=>a+i.price*i.quantity,0),
+known=items.every(i=>i.costKnown),
+totalCost=known?items.reduce((a,i)=>a+i.cost*i.quantity,0):null;
+sales.push({id:uid(),date:new Date().toISOString(),items,total,costKnown:known,totalCost,profit:known?total-totalCost:null});
+cart.forEach(i=>{let c=cards.find(c=>c.id===i.id);c.quantity-=i.quantity});
+cards=cards.filter(c=>c.quantity>0);
+cart=[];save();render();
+notice(known?"Sale completed; profit recorded.":"Sale completed; profit unavailable because at least one purchase cost is unknown.")
+});
+
+$("#editForm").addEventListener("submit",e=>{
+e.preventDefault();
+let id=$("#editId").value,c=cards.find(c=>c.id===id);
+if(!c)return;
+let cv=$("#editCost").value.trim(),
+obj={...c,name:text($("#editName").value,100),set:text($("#editSet").value,100)||"Unknown set",number:text($("#editNumber").value,30),price:num($("#editPrice").value,-1),costKnown:cv!=="",cost:cv===""?null:num(cv,-1),quantity:num($("#editQty").value,0),image:validUrl($("#editImage").value)};
+if(!obj.name||obj.price<0||obj.quantity<1||!Number.isInteger(obj.quantity)||(obj.costKnown&&obj.cost<0))return notice("Check the card details and numbers.",true);
+Object.assign(c,normalCard(obj));
+save();render();$("#editDialog").close();notice("Card updated.")
+});
+
+$("#closeEdit").addEventListener("click",()=>$("#editDialog").close());
+$("#cancelEdit").addEventListener("click",()=>$("#editDialog").close());
+
+$("#csv").addEventListener("click",()=>{
+let rows=[["Name","Set","Number","Selling price EUR","Purchase cost EUR","Cost known","Quantity","Image URL"],...cards.map(c=>[c.name,c.set,c.number,c.price,c.costKnown?c.cost:"",c.costKnown?"yes":"no",c.quantity,c.image])];
+let csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+download("pokeseller-inventory.csv","\uFEFF"+csv,"text/csv;charset=utf-8");
+notice("CSV downloaded.")
+});
+
+$("#backup").addEventListener("click",()=>{
+download("pokeseller-backup-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify({app:"PokéSeller",version:3,exportedAt:new Date().toISOString(),cards,sales},null,2),"application/json");
+notice("Backup downloaded.")
+});
+
+$("#restore").addEventListener("change",async e=>{
+let file=e.target.files[0];
+if(!file)return;
+try{
+let d=JSON.parse(await file.text());
+if(!d||!Array.isArray(d.cards)||!Array.isArray(d.sales))throw Error("This is not a valid PokéSeller backup.");
+if(!confirm(`Restore ${d.cards.length} card entries and ${d.sales.length} sales? This replaces current data.`))return;
+cards=d.cards.map(normalCard);sales=d.sales.map(normalSale);cart=[];save();render();notice("Backup restored.")
+}catch(err){notice(err.message||"Could not restore backup.",true)}
+finally{e.target.value=""}
+});
+
+$("#clearSales").addEventListener("click",()=>{
+if(!sales.length)return notice("No sales history to clear.");
+if(confirm("Delete all sales history? Inventory will not change. This cannot be undone without a backup.")){
+sales=[];save();render();notice("Sales history cleared.")
+}
+});
+
+load();
+render();
+</script>
+</body>
+</html>
